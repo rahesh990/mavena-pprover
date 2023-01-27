@@ -6,7 +6,7 @@ pipeline {
         jdk "JDK"
     }
 
-    stages {
+  
         stage('Initializ
             steps{
                 echo "PATH = ${M2_HOME}/bin:${PATH}"

@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  Deployment:
 
     runs-on: ubuntu-latest
     environment: demo
@@ -23,3 +23,26 @@ jobs:
     - name: Build with Maven
       run: cd my-app
     - run: mvn -B package --file ./my-app/pom.xml
+    
+  Staging:
+  
+    runs-on: ubuntu-latest
+    environment: demo
+    needs: [Deployment]
+    steps:
+    - uses: actions/checkout@v3
+    - name: docker task
+      uses: actions/docker-login@v3
+      with:
+       login-server: azuredev1000.azurecr.io
+       username: azuredev1000
+       password: CfCT9lSQZZH0/EiRIyFn54Vuj16B6L2FHcWrOCdjmQ+ACRD1S4uQ
+    - run: |
+       docker build . -t azuredev1000.azurecr.io/demo:v1
+       docker push azuredev1000.azurecr.io/demo:v1
+        
+      
+      
+      
+      
+    
